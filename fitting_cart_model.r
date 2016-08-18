@@ -20,3 +20,16 @@ validation_set <- train_orgin[-training_set_int, ]
 
 # apply the package rpart
 model_CART <- rpart( Demanda_uni_equil ~ ., data = training_set)
+# get the predicted values
+predicted_CART_model <- predict(model_CART, validation_set)
+summary(predicted_CART_model) # <------ most of the result is just 4.7... not very useful model?!
+
+# apply the package ANN
+library(neuralnet)
+model_nn <- neuralnet( Demanda_uni_equil ~ Semana + Agencia_ID + Canal_ID 
+                       + Ruta_SAK + Cliente_ID + Producto_ID, data = training_set )
+## it's not successful because the model requires numeric arguments???!!!! ok...
+
+# cannot apply the package SVM: SVM learner requires all the features to be numeric...
+# and more over, requires each feature to be scaled into a fairly small interval....
+
